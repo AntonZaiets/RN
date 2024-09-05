@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#F2F3F5',
     },
     direction: {
         flexDirection: 'row',
@@ -21,9 +21,12 @@ const styles = StyleSheet.create({
     },
     Block: {
         width: 150,
-        height: 100,
+        height: 150,
         backgroundColor: '#FA8A34',
         borderRadius: 20,
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     image: {
         width: '30%',
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
         width: 150,
-        height: 100,
+        height: 150,
         alignItems: 'center',
         margin: 20,
         justifyContent: 'center',
@@ -156,6 +159,10 @@ const styles = StyleSheet.create({
         color: '#FA8A34',
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    bg: {
+        position: 'absolute',
+        bottom: 0,
     },
 });
 

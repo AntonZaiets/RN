@@ -1,19 +1,17 @@
+import React, { useState } from "react";
 import HomeScreen from "./Components/Home/HomeScreen";
-import SplashScreen from "./Components/SplashScreen/SplashScreen";
-import { useEffect, useState } from "react";
+import { SplashScreen } from "./Components/SplashScreen/SplashScreen";
 
 export default function App() {
-  const [isShowSplash, setIsShowSplash] = useState(true);
+    const [isLoadingComplete, setLoadingComplete] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsShowSplash(false);
-    }, 500);
-  }, []);
-
-  return (
-      <>
-        {isShowSplash ? <SplashScreen /> : <HomeScreen />}
-      </>
-  );
+    return (
+        <>
+            {!isLoadingComplete ? (
+                <SplashScreen onLoadingComplete={() => setLoadingComplete(true)} />
+            ) : (
+                <HomeScreen />
+            )}
+        </>
+    );
 }

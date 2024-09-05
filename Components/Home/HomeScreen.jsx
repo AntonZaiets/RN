@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, Dimensions, Modal, TextInput } from "react-native";
+import { View, TouchableOpacity, Text, Dimensions, Modal, TextInput, Image } from "react-native";
 import styles from './HomeScreenStyles';
 import { ArrowSvg } from "../../Icons/ArrowSvg";
 import { UserSvg } from "../../Icons/UserSvg";
 import { HandSvg } from "../../Icons/HandSvg";
 import { GoldSvg } from "../../Icons/GoldSvg";
-import { Image } from "react-native";
 import {OilSvg} from "../../Icons/OilSvg";
 import {ElectricSvg} from "../../Icons/ElectricSvg";
 import {EthereumSvg} from "../../Icons/EthereumSvg";
@@ -17,6 +16,7 @@ import {HouseSvg} from "../../Icons/HouseSvg";
 import {MountainSvg} from "../../Icons/MountainSvg";
 import {RedHuiniaSvg} from "../../Icons/RedHuiniaSvg";
 import {BlackHuiniaSvg} from "../../Icons/BlackHuiniaSvg";
+import {BitcoinIntroSvg} from "../../Icons/BitcoinIntroSvg";
 
 
 export default function HomeScreen() {
@@ -133,9 +133,15 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
+            <Image
+                source={require('../../Icons/bg.png')}
+                style={styles.bg}
+            />
             <View style={styles.direction}>
                 <View style={styles.LeftSide}>
-                    <View style={styles.Block}></View>
+                    <View style={styles.Block}>
+                        <BitcoinIntroSvg />
+                    </View>
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <CranSvg style={styles.image}/>

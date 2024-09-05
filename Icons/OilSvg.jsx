@@ -11,7 +11,7 @@ export const OilSvg = () => {
                     fill="#606773"/>
                 <Path
                     d="M26.6892 23.8687C26.6892 25.0573 26.217 26.1974 25.3765 27.0379C24.536 27.8784 23.396 28.3506 22.2073 28.3506"
-                    stroke="#C1C4CB" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/>
+                    stroke="#C1C4CB" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round"/>
             </g>
         </Svg>
 

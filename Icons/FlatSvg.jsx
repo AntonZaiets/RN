@@ -1,12 +1,12 @@
 import React from "react";
-import Svg, { Path } from 'react-native-svg';
+import { Svg, Path, Rect } from 'react-native-svg';
 
 export const FlatSvg = () => {
     return (
         <Svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect y="-6.10352e-05" width="47.9999" height="47.9999" rx="24" fill="#F7D16D"/>
-            <rect width="47.9999" height="47.9999" rx="24" fill="#F7D16D"/>
-            <rect width="47.9999" height="47.9999" rx="24" fill="#5AA5FA"/>
+            <Rect y="-6.10352e-05" width="47.9999" height="47.9999" rx="24" fill="#F7D16D"/>
+            <Rect width="47.9999" height="47.9999" rx="24" fill="#F7D16D"/>
+            <Rect width="47.9999" height="47.9999" rx="24" fill="#5AA5FA"/>
             <Path
                 d="M15.5 22.2047V33C15.5 33.2761 15.7239 33.5 16 33.5H21.5C22.0523 33.5 22.5 33.0523 22.5 32.5V20.419C22.5 19.7275 21.8149 19.2447 21.1637 19.4773L16.1637 21.263C15.7657 21.4051 15.5 21.7821 15.5 22.2047Z"
                 fill="#C2DEFF"/>

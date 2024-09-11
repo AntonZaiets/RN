@@ -1,11 +1,11 @@
 import React from "react";
-import Svg, { Path } from 'react-native-svg';
+import { Svg, Path, Rect, G } from 'react-native-svg';
 
 export const CranSvg = () => {
     return (
         <Svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.64">
-                <rect x="0.000244141" width="43.9999" height="43.9999" rx="22" fill="#77CDD9"/>
+            <G opacity="0.64">
+                <Rect x="0.000244141" width="43.9999" height="43.9999" rx="22" fill="#77CDD9"/>
                 <Path
                     d="M11.917 15.997C11.917 15.6304 12.2142 15.3333 12.5808 15.3333H15.8217V19.5503C15.8217 19.9169 15.5245 20.2141 15.1579 20.2141H12.5808C12.2142 20.2141 11.917 19.9169 11.917 19.5503V15.997Z"
                     fill="white" stroke="white" strokeWidth="1.375"/>
@@ -16,17 +16,17 @@ export const CranSvg = () => {
                       strokeLinecap="round"/>
                 <Path opacity="0.8" d="M18.5549 31.1667V19.2184" stroke="white" strokeWidth="1.375"
                       strokeLinecap="round"/>
-                <rect opacity="0.8" x="24.5288" y="25.8564" width="5.31034" height="5.31034" rx="0.916667"
+                <Rect opacity="0.8" x="24.5288" y="25.8564" width="5.31034" height="5.31034" rx="0.916667"
                       fill="white"/>
                 <Path d="M26.8523 28.5115H27.5161" stroke="#77CDD9" strokeWidth="0.916667" strokeLinecap="round"
                       strokeLinejoin="round"/>
-                <rect x="25.1926" y="21.678" width="3.90466" height="1.95233" rx="0.976166" fill="white" stroke="white"
+                <Rect x="25.1926" y="21.678" width="3.90466" height="1.95233" rx="0.976166" fill="white" stroke="white"
                       strokeWidth="1.375"/>
                 <Path d="M27.1453 21.19V18.9936" stroke="white" strokeWidth="1.375"/>
                 <Path opacity="0.8"
                       d="M15.8215 15.3333L18.751 12.4038C19.0171 12.1378 19.4508 12.1458 19.7068 12.4215L22.4107 15.3333"
                       stroke="white" strokeWidth="1.375"/>
-            </g>
+            </G>
         </Svg>
     );
 }

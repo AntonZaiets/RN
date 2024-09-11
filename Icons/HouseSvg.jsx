@@ -1,11 +1,12 @@
 import React from "react";
-import Svg, { Path } from 'react-native-svg';
+import { Svg, Path, Rect, G } from 'react-native-svg';
+
 
 export const HouseSvg = () => {
     return (
         <Svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.64">
-                <rect x="0.000244141" y="-6.10352e-05" width="43.9999" height="43.9999" rx="22" fill="#565ED1"/>
+            <G opacity="0.64">
+                <Rect x="0.000244141" y="-6.10352e-05" width="43.9999" height="43.9999" rx="22" fill="#565ED1"/>
                 <Path d="M11.917 20.9176L20.942 13.3251C21.2805 13.0403 21.7742 13.0384 22.1149 13.3205L31.2887 20.9176"
                       stroke="white" strokeWidth="1.375" strokeLinecap="round"/>
                 <Path d="M29.6109 19.5444V29.154C29.6109 29.6595 29.2011 30.0692 28.6957 30.0692H26.3115" stroke="white"
@@ -15,7 +16,7 @@ export const HouseSvg = () => {
                     fill="white" stroke="white" strokeWidth="1.375"/>
                 <Path d="M13.2913 25.4932L18.2874 20.901C18.6485 20.5691 19.2072 20.5809 19.554 20.9278L24.1182 25.4932"
                       stroke="white" strokeWidth="1.375" strokeLinecap="round"/>
-            </g>
+            </G>
         </Svg>
 
     );

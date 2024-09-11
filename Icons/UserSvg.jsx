@@ -1,10 +1,11 @@
 import React from "react";
-import Svg, { Path } from 'react-native-svg';
+import { Svg, Path, Circle } from 'react-native-svg';
+
 
 export const UserSvg = () => {
     return (
         <Svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle opacity="0.4" cx="22" cy="22" r="22" fill="#00B28C"/>
+            <Circle opacity="0.4" cx="22" cy="22" r="22" fill="#00B28C"/>
             <Path
                 d="M15.5833 29.3334L15.681 28.7047C15.8569 27.5742 16.5362 26.5759 17.6031 26.1629C18.7974 25.7007 20.5198 25.1967 22.3525 25.1967C24.1852 25.1967 25.9076 25.7007 27.1018 26.1629C28.1688 26.5759 28.8481 27.5742 29.0239 28.7047L29.1217 29.3334"
                 stroke="white" strokeWidth="1.46667" strokeLinecap="round" strokeLinejoin="round"/>

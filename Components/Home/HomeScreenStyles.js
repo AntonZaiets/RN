@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'space-around',
@@ -10,6 +11,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F3F5',
     },
     direction: {
+        marginTop: '15%',
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
@@ -32,6 +34,14 @@ const styles = StyleSheet.create({
         width: '30%',
         height: '30%',
     },
+    imageLeftRight: {
+        display: 'flex',
+        position: 'absolute',
+        zIndex: -3,
+        left: '100%',
+        width: '30%',
+        height: '30%',
+    },
     imageText: {
         marginTop: 10,
     },
@@ -45,10 +55,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 20,
         justifyContent: 'center',
+        padding: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
     },
     svgContainer: {
         display: 'flex',
         flexDirection: 'row',
+        position: 'relative',
+        width: 110,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    leftIcon: {
+        position: 'absolute',
+        left: 0,
+        zIndex: 1,
+    },
+    centerIcon: {
+        zIndex: 2,
+    },
+    rightIcon: {
+        position: 'absolute',
+        right: 0,
+        zIndex: 1,
     },
     buttonContainer: {
         flexDirection: 'column',
@@ -79,23 +113,27 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
     },
     modalContent: {
+        display: 'flex',
         position: 'absolute',
         bottom: 0,
         backgroundColor: 'white',
         padding: 15,
         width: '100%',
+        height: '80%',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
         paddingVertical: 30,
     },
-    modalCloseText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
+    modalClose: {
+        display: 'flex',
+        zIndex: 10,
+        position: 'absolute',
+        top: '-15%',
+        marginBottom: 50,
         alignSelf: 'flex-start',
     },
     modalHeader: {
@@ -130,14 +168,14 @@ const styles = StyleSheet.create({
     modalTextInput: {
         borderWidth: 1,
         borderColor: '#ddd',
-        borderRadius: 5,
+        borderRadius: 15,
         padding: 10,
         fontSize: 16,
     },
     passwordToggle: {
         position: 'absolute',
         right: 10,
-        top: 40,
+        top: 35,
     },
     modalContinueButton: {
         backgroundColor: '#FA8A34',

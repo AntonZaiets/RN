@@ -120,26 +120,32 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         backgroundColor: 'white',
-        padding: 15,
+        //padding: 15,
         width: '100%',
         height: '80%',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingHorizontal: 20,
+        //paddingHorizontal: 20,
         paddingVertical: 30,
     },
     modalClose: {
         display: 'flex',
         zIndex: 10,
         position: 'absolute',
-        top: '-15%',
-        marginBottom: 50,
+        top: '-10%',
         alignSelf: 'flex-start',
+        paddingLeft: 15,
     },
     modalHeader: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,
+        borderBottomColor: '#EBEFF5',
+        borderBottomWidth: 1,
+        paddingBottom: 20,
+        paddingLeft: 15,
+        paddingRight: 20,
     },
     modalImage: {
         width: 50,
@@ -148,6 +154,7 @@ const styles = StyleSheet.create({
     },
     modalHeaderText: {
         justifyContent: 'center',
+        marginLeft: 20,
     },
     modalTitle: {
         fontSize: 24,
@@ -159,6 +166,7 @@ const styles = StyleSheet.create({
     },
     modalInputContainer: {
         marginBottom: 15,
+        paddingHorizontal: 10,
     },
     modalInputLabel: {
         fontSize: 14,
@@ -174,21 +182,22 @@ const styles = StyleSheet.create({
     },
     passwordToggle: {
         position: 'absolute',
-        right: 10,
+        right: 20,
         top: 35,
     },
-    modalContinueButton: {
+    /*modalContinueButton: {
         backgroundColor: '#FA8A34',
         borderRadius: 5,
         paddingVertical: 15,
         alignItems: 'center',
         marginTop: 20,
+        marginHorizontal: 15,
     },
     modalContinueButtonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-    },
+    },*/
     modalCreateAccountButton: {
         marginTop: 15,
         alignItems: 'center',
@@ -201,6 +210,22 @@ const styles = StyleSheet.create({
     bg: {
         position: 'absolute',
         bottom: 0,
+    },
+    errorLabelTop: {
+        position: "absolute",
+        right: 15,
+        top: 75,
+    },
+    errorLabelBot: {
+        position: "absolute",
+        right: 15,
+        top: 35,
+    },
+    errorMessage: {
+        color: '#D63C41',
+        fontSize: 16,
+        fontWeight: 500,
+        marginBottom: 20,
     },
 });
 

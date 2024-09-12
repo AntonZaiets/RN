@@ -19,6 +19,11 @@ import { RedHuiniaSvg } from "../../Icons/RedHuiniaSvg";
 import { BlackHuiniaSvg } from "../../Icons/BlackHuiniaSvg";
 import { BitcoinIntroSvg } from "../../Icons/BitcoinIntroSvg";
 import {EyeSvg} from "../../Icons/EyeSvg";
+import {ErrorLabelSvg} from "../../Icons/ErrorLabelSvg";
+import {ModalUserSvg} from "../../Icons/ModalUserSvg";
+import { createStackNavigator } from '@react-navigation/stack';
+import {useNavigation} from "@react-navigation/native";
+import {ContinueButton} from "../ContinueButton/ContinueButton";
 
 export const HomeScreen = ({ onHomeLoaded }) => {
     const [openSignUpModal, setOpenSignUpModal] = useState(false);
@@ -27,6 +32,12 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState(null);
+    const [borderColor, setBorderColor] = useState('#ddd')
+    const [inputError, setInputError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openPin, setOpenPin] = useState(false);
+    const navigation = useNavigation(); // Initialize navigation hook
+
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -43,21 +54,26 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 setToken(response.data.token);
                 console.log('Success', 'Logged in successfully');
                 setOpenSignInModal(false);
-
+                setInputError(false);
+                setErrorMessage('');
+                setOpenPin(true);
+                navigation.navigate('PinCode');
             }
         } catch (error) {
             Alert.alert('Error', 'Login failed');
-            console.error(error);
+            console.error(111111111111, error);
+            setBorderColor('#F5A6A9');
+            setInputError(true);
+            setErrorMessage('Error: Invalid E-mail or Password')
+            setOpenPin(false);
         }
     };
 
     useEffect(() => {
         const loadComponent = async () => {
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Симуляція затримки
-            onHomeLoaded(); // Сигналізуємо про завантаження
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            onHomeLoaded();
         };
-
-        //loadComponent();
     }, [onHomeLoaded]);
 
     function renderSignUpModal() {
@@ -66,47 +82,48 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 visible={openSignUpModal}
                 animationType='slide'
                 transparent={true}>
-                {/*<View style={styles.modalOverlay}>*/}
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity onPress={() => setOpenSignUpModal(false)} style={styles.modalClose}>
-                            <ArrowSvg />
-                        </TouchableOpacity>
-                        <View>
-                            <View style={styles.modalHeader}>
-                                <View style={styles.modalHeaderText}>
-                                    <Text style={styles.modalTitle}>Sign Up</Text>
-                                    <Text style={styles.modalSubtitle}>Personal Account</Text>
-                                </View>
+                <View style={styles.modalContent}>
+                    <TouchableOpacity onPress={() => setOpenSignUpModal(false)} style={styles.modalClose}>
+                        <ArrowSvg />
+                    </TouchableOpacity>
+                    <View>
+                        <View style={styles.modalHeader}>
+                            <View style={styles.modalUserSvg}>
+                                <ModalUserSvg/>
                             </View>
-                            <View>
-                                <View style={styles.modalInputContainer}>
-                                    <Text style={styles.modalInputLabel}>Name</Text>
-                                    <TextInput style={styles.modalTextInput} placeholder="Name" />
-                                </View>
-                                <View style={styles.modalInputContainer}>
-                                    <Text style={styles.modalInputLabel}>E-mail</Text>
-                                    <TextInput style={styles.modalTextInput} placeholder="E-mail" />
-                                </View>
-                                <View style={styles.modalInputContainer}>
-                                    <Text style={styles.modalInputLabel}>Password</Text>
-                                    <TextInput
-                                        style={styles.modalTextInput}
-                                        placeholder="Password"
-                                        secureTextEntry={!passwordVisible}
-                                        value={password}
-                                        onChangeText={(text) => setPassword(text)}
-                                    />
-                                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordToggle}>
-                                        <Text>{passwordVisible ? <EyeSvg/> : <EyeSvg/>}</Text>
-                                    </TouchableOpacity>
-                                </View>
+                            <View style={styles.modalHeaderText}>
+                                <Text style={styles.modalTitle}>Login</Text>
+                                <Text style={styles.modalSubtitle}>Personal Account</Text>
                             </View>
-                            <TouchableOpacity style={styles.modalContinueButton}>
-                                <Text style={styles.modalContinueButtonText}>Continue</Text>
-                            </TouchableOpacity>
                         </View>
+                        <View>
+                            <View style={styles.modalInputContainer}>
+                                <Text style={styles.modalInputLabel}>Name</Text>
+                                <TextInput style={styles.modalTextInput} placeholder="Name" />
+                            </View>
+                            <View style={styles.modalInputContainer}>
+                                <Text style={styles.modalInputLabel}>E-mail</Text>
+                                <TextInput style={styles.modalTextInput} placeholder="E-mail" />
+                            </View>
+                            <View style={styles.modalInputContainer}>
+                                <Text style={styles.modalInputLabel}>Password</Text>
+                                <TextInput
+                                    style={styles.modalTextInput}
+                                    placeholder="Password"
+                                    secureTextEntry={!passwordVisible}
+                                    value={password}
+                                    onChangeText={(text) => setPassword(text)}
+                                />
+                                <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordToggle}>
+                                    <Text>{passwordVisible ? <EyeSvg /> : <EyeSvg />}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <TouchableOpacity style={styles.modalContinueButton}>
+                            <Text style={styles.modalContinueButtonText}>Continue</Text>
+                        </TouchableOpacity>
                     </View>
-                {/*</View>*/}
+                </View>
             </Modal>
         );
     }
@@ -117,52 +134,60 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 visible={openSignInModal}
                 animationType='slide'
                 transparent={true}>
-                {/*<View style={styles.modalOverlay}>*/}
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity onPress={() => setOpenSignInModal(false)} style={styles.modalClose}>
-                            <ArrowSvg />
-                        </TouchableOpacity>
-                        <View>
-                            <View style={styles.modalHeader}>
-                                <View style={styles.modalHeaderText}>
-                                    <Text style={styles.modalTitle}>Login</Text>
-                                    <Text style={styles.modalSubtitle}>Personal Account</Text>
-                                </View>
+                <View style={styles.modalContent}>
+                    <TouchableOpacity onPress={() => setOpenSignInModal(false)} style={styles.modalClose}>
+                        <ArrowSvg />
+                    </TouchableOpacity>
+                    <View>
+                        <View style={styles.modalHeader}>
+                            <View style={styles.modalUserSvg}>
+                                <ModalUserSvg/>
                             </View>
-                            <View>
-                                <View style={styles.modalInputContainer}>
-                                    <Text style={styles.modalInputLabel}>E-mail</Text>
-                                    <TextInput
-                                        style={styles.modalTextInput}
-                                        placeholder="E-mail"
-                                        value={email}
-                                        onChangeText={setEmail}
-                                    />
-                                </View>
-                                <View style={styles.modalInputContainer}>
-                                    <Text style={styles.modalInputLabel}>Password</Text>
-                                    <TextInput
-                                        style={styles.modalTextInput}
-                                        placeholder="Password"
-                                        secureTextEntry={!passwordVisible}
-                                        value={password}
-                                        onChangeText={setPassword}
-                                    />
-                                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordToggle}>
-                                        <Text>{passwordVisible ?<EyeSvg/> : <EyeSvg/>}</Text>
-                                    </TouchableOpacity>
-                                </View>
+                            <View style={styles.modalHeaderText}>
+                                <Text style={styles.modalTitle}>Login</Text>
+                                <Text style={styles.modalSubtitle}>Personal Account</Text>
                             </View>
-                            <TouchableOpacity style={styles.modalContinueButton} onPress={handleLogin}>
-                                <Text style={styles.modalContinueButtonText}>Continue</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.modalCreateAccountButton} onPress={() => { setOpenSignUpModal(true); setOpenSignInModal(false); }}>
-                                <Text style={styles.modalCreateAccountButtonText}>Create Account</Text>
-                                {renderSignUpModal()}
-                            </TouchableOpacity>
                         </View>
+                        <View>
+                            <View style={styles.modalInputContainer}>
+                                <View><Text style={styles.errorMessage}>{errorMessage}</Text></View>
+                                <Text style={styles.modalInputLabel}>E-mail</Text>
+                                <TextInput
+                                    style={[styles.modalTextInput, {borderColor: borderColor}]}
+                                    placeholder='emilys'
+                                    value={email}
+                                    onChangeText={setEmail}
+                                />
+                                <TouchableOpacity style={styles.errorLabelTop}>
+                                    <Text>{inputError ? <ErrorLabelSvg /> : ''}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.modalInputContainer}>
+                                <Text style={styles.modalInputLabel}>Password</Text>
+                                <TextInput
+                                    style={[styles.modalTextInput, {borderColor: borderColor}]}
+                                    placeholder="emilyspass"
+                                    secureTextEntry={!passwordVisible}
+                                    value={password}
+                                    onChangeText={setPassword}
+                                />
+                                <TouchableOpacity onPress={togglePasswordVisibility} style={[
+                                    inputError ? {position: 'absolute', top: 35, right: 50} : styles.passwordToggle
+                                ]}>
+                                    <Text>{passwordVisible ? <EyeSvg/> : <EyeSvg/>}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.errorLabelBot}>
+                                    <Text>{inputError ? <ErrorLabelSvg /> : ''}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <ContinueButton onPress = {handleLogin}/>
+                        <TouchableOpacity style={styles.modalCreateAccountButton} onPress={() => { setOpenSignUpModal(true); setOpenSignInModal(false); }}>
+                            <Text style={styles.modalCreateAccountButtonText}>Create Account</Text>
+                            {renderSignUpModal()}
+                        </TouchableOpacity>
                     </View>
-                {/*</View>*/}
+                </View>
             </Modal>
         );
     }

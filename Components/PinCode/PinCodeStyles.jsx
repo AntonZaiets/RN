@@ -70,6 +70,12 @@ const styles = StyleSheet.create({
     continueButton: {
       backgroundColor: 'red',
     },
+    errorMessage: {
+        color: '#D63C41',
+        fontSize: 16,
+        fontWeight: 500,
+        marginTop: 20,
+    },
 });
 
 export default styles;

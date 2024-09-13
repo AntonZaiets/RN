@@ -10,9 +10,13 @@ import {useNavigation} from "@react-navigation/native";
 export const PinCode = () => {
     const [code, setCode] = useState([]);
     const [isPressed, setIsPressed] = useState(false);
+    const [pressedContinueFirstTime, setPressedContinueFirstTime] = useState(false)
     const [pressedContinue, setPressedContinue] = useState(false)
-    let previousCode = [];
-    const navigation = useNavigation(); // Initialize navigation hook
+    const [previousCode, setPreviousCode] = useState([]);
+    const navigation = useNavigation();
+    const [errorMessage, setErrorMessage] = useState('')
+    const [repeatCode, setRepeatCode] = useState('Create a Pin code')
+
 
     const addDigit = (digit) => {
         if (code.length < 5) {
@@ -24,16 +28,27 @@ export const PinCode = () => {
         setCode(prevCode => prevCode.slice(0, -1)); // delete the last digit in array
     };
 
+
     const clickedContinueButton = () => {
-        setPressedContinue(!pressedContinue);
-        if(pressedContinue){
-            previousCode = code;
+        if (!pressedContinueFirstTime) {
+            // First time pressing continue, store the code and ask the user to repeat it
+            setPressedContinueFirstTime(true);
+            setPreviousCode(code);
+            setRepeatCode('Repeat a Pin code');
+            setCode([]); // Clear the code for the user to enter it again
+        } else {
+            // User is now trying to validate the repeated code
+            setPressedContinue(true);
+            if (previousCode.length === code.length && previousCode.every((digit, index) => digit === code[index])) {
+                console.log('SIIIIIIIIIIIIIIIIIIIIIIIIIUUUUUUUUUUUUUUUUUU');
+                setErrorMessage('');
+                navigation.navigate('Home');
+            } else {
+                setErrorMessage('Wrong Code. Try again!');
+                setCode([]); // Reset the code input on failure
+            }
         }
-        if(!pressedContinue && previousCode.every((digit, index) => digit === code[index])){
-            navigation.navigate('Home');
-        }
-        setCode([]);
-    }
+    };
 
 
 
@@ -44,7 +59,7 @@ export const PinCode = () => {
                     <PhoneSvg />
                 </View>
                 <View>
-                    <Text style={{fontSize: 15, fontWeight: 600, marginTop: 10}}>Create a Pin code</Text>
+                    <Text style={{fontSize: 15, fontWeight: 600, marginTop: 10}}>{repeatCode}</Text>
                 </View>
                 <View>
                     <Text  style={{fontSize: 15, marginTop: 25}}>Enter 5 digits code:</Text>
@@ -55,6 +70,9 @@ export const PinCode = () => {
                     <View style={[styles.pinCodeDot, code.length >= 3 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
                     <View style={[styles.pinCodeDot, code.length >= 4 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
                     <View style={[styles.pinCodeDot, code.length >= 5 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                </View>
+                <View>
+                    <Text style={styles.errorMessage}>{errorMessage}</Text>
                 </View>
             </View>
             <View style={styles.pinCodeContainerBot}>

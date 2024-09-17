@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     digits: {
         display: 'flex',
         flexDirection: 'column',
-        height: '80%',
+        height: '55%',
         width: '90%',
         alignItems: 'center',
         borderBottomColor: '#EBEFF5',

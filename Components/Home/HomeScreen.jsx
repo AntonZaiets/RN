@@ -21,9 +21,9 @@ import { BitcoinIntroSvg } from "../../Icons/BitcoinIntroSvg";
 import {EyeSvg} from "../../Icons/EyeSvg";
 import {ErrorLabelSvg} from "../../Icons/ErrorLabelSvg";
 import {ModalUserSvg} from "../../Icons/ModalUserSvg";
-import { createStackNavigator } from '@react-navigation/stack';
 import {useNavigation} from "@react-navigation/native";
 import {ContinueButton} from "../ContinueButton/ContinueButton";
+import {useUser} from "../UserName/UserName";
 
 export const HomeScreen = ({ onHomeLoaded }) => {
     const [openSignUpModal, setOpenSignUpModal] = useState(false);
@@ -36,8 +36,8 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const [inputError, setInputError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [openPin, setOpenPin] = useState(false);
-    const navigation = useNavigation(); // Initialize navigation hook
-
+    const navigation = useNavigation();
+    const { setUser } = useUser(); // Отримай функцію для оновлення користувача
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -50,9 +50,20 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 password: password,
             });
 
+            const userData = await axios.get('https://dummyjson.com/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${response.data.token}`,
+                },
+                withCredentials: true,
+            });
+            setUser({
+                firstName: userData.data.firstName,
+                lastName: userData.data.lastName
+            });
+
+
             if (response.data && response.data.token) {
                 setToken(response.data.token);
-                console.log('Success', 'Logged in successfully');
                 setOpenSignInModal(false);
                 setInputError(false);
                 setErrorMessage('');
@@ -60,6 +71,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 navigation.navigate('PinCode');
             }
         } catch (error) {
+            navigation.navigate('PinCode');
             Alert.alert('Error', 'Login failed');
             console.error(111111111111, error);
             setBorderColor('#F5A6A9');
@@ -181,7 +193,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ContinueButton onPress = {handleLogin}/>
+                        <ContinueButton onPress = {handleLogin} bgColor={'#FA8A34'}/>
                         <TouchableOpacity style={styles.modalCreateAccountButton} onPress={() => { setOpenSignUpModal(true); setOpenSignInModal(false); }}>
                             <Text style={styles.modalCreateAccountButtonText}>Create Account</Text>
                             {renderSignUpModal()}

@@ -3775,6 +3775,13 @@ expo-keep-awake@~13.0.2:
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-13.0.2.tgz"
   integrity sha512-kKiwkVg/bY0AJ5q1Pxnm/GvpeB6hbNJhcFsoOWDh2NlpibhCLaHL826KHUM+WsnJRbVRxJ+K9vbPRHEMvFpVyw==
 
+expo-local-authentication@~14.0.1:
+  version "14.0.1"
+  resolved "https://registry.npmjs.org/expo-local-authentication/-/expo-local-authentication-14.0.1.tgz"
+  integrity sha512-kAwUD1wEqj1fhwQgIHlP4H/JV9AcX+NO3BJwhPM2HuCFS0kgx2wvcHisnKBSTRyl8u5Jt4odzMyQkDJystwUTg==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-modules-autolinking@>=0.8.1, expo-modules-autolinking@1.11.2:
   version "1.11.2"
   resolved "https://registry.npmjs.org/expo-modules-autolinking/-/expo-modules-autolinking-1.11.2.tgz"
@@ -6214,6 +6221,21 @@ react-is@^18.0.0:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-linear-gradient@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz"
+  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
+
+react-native-local-auth@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/react-native-local-auth/-/react-native-local-auth-1.7.0.tgz"
+  integrity sha512-0Bxj0nQow0oMAooAJtQy/+L17YcJL2+sO6jqrVCuZbWaHQXR+wQf3N/H2xNPd65DRwNKCZKoYDpTgqLJ3dXQDg==
+
+react-native-passcode-status@>=1.1.0:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/react-native-passcode-status/-/react-native-passcode-status-1.1.2.tgz"
+  integrity sha512-a1RlcvtvIKL5L2NNPp9u3IQQjV877/tNkCvJGC71F/2gnbykxAQAPBOzLFGDtkne3439F2AgYra+oNFiQjyd/g==
 
 react-native-reanimated@~3.10.1:
   version "3.10.1"

@@ -5,6 +5,7 @@ import {PhoneSvg} from "../../Icons/PhoneSvg";
 import {DeleteSvg} from "../../Icons/DeleteSvg";
 import {ContinueButton} from "../ContinueButton/ContinueButton";
 import {useNavigation} from "@react-navigation/native";
+import {FaceIDAuthentication} from "../FaceId/FaceId";
 
 
 export const PinCode = () => {
@@ -16,6 +17,8 @@ export const PinCode = () => {
     const navigation = useNavigation();
     const [errorMessage, setErrorMessage] = useState('')
     const [repeatCode, setRepeatCode] = useState('Create a Pin code')
+    const [isFaceIDRequired, setIsFaceIDRequired] = useState(false);
+
 
 
     const addDigit = (digit) => {
@@ -31,50 +34,57 @@ export const PinCode = () => {
 
     const clickedContinueButton = () => {
         if (!pressedContinueFirstTime) {
-            // First time pressing continue, store the code and ask the user to repeat it
+            // Перший раз натискається кнопка продовження
             setPressedContinueFirstTime(true);
             setPreviousCode(code);
             setRepeatCode('Repeat a Pin code');
-            setCode([]); // Clear the code for the user to enter it again
+            setCode([]); // Очистити код
         } else {
-            // User is now trying to validate the repeated code
+            // Перевіряємо повторений код
             setPressedContinue(true);
             if (previousCode.length === code.length && previousCode.every((digit, index) => digit === code[index])) {
-                console.log('SIIIIIIIIIIIIIIIIIIIIIIIIIUUUUUUUUUUUUUUUUUU');
                 setErrorMessage('');
-                navigation.navigate('Home');
+                setIsFaceIDRequired(true);  // Запускаємо Face ID
+                navigation.navigate('HomeDashboard');
             } else {
                 setErrorMessage('Wrong Code. Try again!');
-                setCode([]); // Reset the code input on failure
+                setCode([]); // Очистити код у разі невдачі
             }
         }
     };
 
 
 
+
     return(
         <View style={styles.pinCodeContainer}>
-            <View style={styles.pinCodeContainerTop}>
-                <View>
-                    <PhoneSvg />
+            {isFaceIDRequired ? (
+                <FaceIDAuthentication />
+            ) : (
+            <>
+                <View style={styles.pinCodeContainerTop}>
+                    <View>
+                        <PhoneSvg />
+                    </View>
+                    <View>
+                        <Text style={{fontSize: 15, fontWeight: 600, marginTop: 10}}>{repeatCode}</Text>
+                    </View>
+                    <View>
+                        <Text  style={{fontSize: 15, marginTop: 25}}>Enter 5 digits code:</Text>
+                    </View>
+                    <View style={styles.pinCodeDots}>
+                        <View style={[styles.pinCodeDot, code.length >= 1 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                        <View style={[styles.pinCodeDot, code.length >= 2 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                        <View style={[styles.pinCodeDot, code.length >= 3 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                        <View style={[styles.pinCodeDot, code.length >= 4 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                        <View style={[styles.pinCodeDot, code.length >= 5 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
+                    </View>
+                    <View>
+                        <Text style={styles.errorMessage}>{errorMessage}</Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={{fontSize: 15, fontWeight: 600, marginTop: 10}}>{repeatCode}</Text>
-                </View>
-                <View>
-                    <Text  style={{fontSize: 15, marginTop: 25}}>Enter 5 digits code:</Text>
-                </View>
-                <View style={styles.pinCodeDots}>
-                    <View style={[styles.pinCodeDot, code.length >= 1 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
-                    <View style={[styles.pinCodeDot, code.length >= 2 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
-                    <View style={[styles.pinCodeDot, code.length >= 3 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
-                    <View style={[styles.pinCodeDot, code.length >= 4 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
-                    <View style={[styles.pinCodeDot, code.length >= 5 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
-                </View>
-                <View>
-                    <Text style={styles.errorMessage}>{errorMessage}</Text>
-                </View>
-            </View>
+            </>
+            )}
             <View style={styles.pinCodeContainerBot}>
                 <View style={styles.digits}>
                     <View style={styles.digitsRow}>

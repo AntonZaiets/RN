@@ -24,6 +24,7 @@ import {ModalUserSvg} from "../../Icons/ModalUserSvg";
 import {useNavigation} from "@react-navigation/native";
 import {ContinueButton} from "../ContinueButton/ContinueButton";
 import {useUser} from "../UserName/UserName";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = ({ onHomeLoaded }) => {
     const [openSignUpModal, setOpenSignUpModal] = useState(false);
@@ -43,6 +44,64 @@ export const HomeScreen = ({ onHomeLoaded }) => {
         setPasswordVisible(!passwordVisible);
     };
 
+    /*const checkLoginStatus = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token !== null) {
+                // Якщо токен існує, перенаправляємо на компонент PinCode
+                navigation.navigate('PinCode');
+            }
+        } catch (error) {
+            console.error('Error retrieving token:', error);
+        }
+    };
+
+    useEffect(() => {
+        checkLoginStatus(); // викликаємо функцію при завантаженні компонента
+    }, []);*/
+
+    /*const saveLoginData = async (token) => {
+        try {
+            await AsyncStorage.setItem('userToken', token);
+        } catch (error) {
+            console.error('Error saving login data:', error);
+        }
+    };*/
+
+    /*const getLoginData = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            return token !== null ? token : null;
+        } catch (error) {
+            console.error('Error retrieving login data:', error);
+            return null;
+        }
+    };*/
+    const checkLoginStatus = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token !== null) {
+                setToken(token);
+                navigation.navigate('PinCode');
+            }
+        } catch (error) {
+            console.error('Error retrieving token:', error);
+        }
+    };
+
+    useEffect(() => {
+        checkLoginStatus();
+    }, []);
+
+    const saveLoginData = async (token) => {
+        try {
+            await AsyncStorage.setItem('userToken', token);
+            console.log('Token saved successfully');
+        } catch (error) {
+            console.error('Error saving login data:', error);
+        }
+    };
+
     const handleLogin = async () => {
         try {
             const response = await axios.post('https://dummyjson.com/auth/login', {
@@ -50,19 +109,8 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 password: password,
             });
 
-            const userData = await axios.get('https://dummyjson.com/auth/me', {
-                headers: {
-                    'Authorization': `Bearer ${response.data.token}`,
-                },
-                withCredentials: true,
-            });
-            setUser({
-                firstName: userData.data.firstName,
-                lastName: userData.data.lastName
-            });
-
-
             if (response.data && response.data.token) {
+                await saveLoginData(response.data.token);  // зберігаємо токен
                 setToken(response.data.token);
                 setOpenSignInModal(false);
                 setInputError(false);
@@ -71,12 +119,11 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 navigation.navigate('PinCode');
             }
         } catch (error) {
-            navigation.navigate('PinCode');
             Alert.alert('Error', 'Login failed');
-            console.error(111111111111, error);
+            console.error('Error during login:', error);
             setBorderColor('#F5A6A9');
             setInputError(true);
-            setErrorMessage('Error: Invalid E-mail or Password')
+            setErrorMessage('Error: Invalid E-mail or Password');
             setOpenPin(false);
         }
     };

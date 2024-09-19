@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 25,
         display: 'flex',
         flexDirection: 'column',
-        height: '45%',
+        height: 500,
         justifyContent: 'space-between',
         padding: 20
     },
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     },
     aboutPost: {
         marginTop: 20,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
     },
     postComments: {
@@ -28,6 +28,19 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 20,
 
+    },
+    backButton: {
+        paddingHorizontal: 16,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        backgroundColor: '#FFFFFF',
+        height: 90,
+        paddingBottom: 20,
+        //paddingTop: 5,
+        borderTopColor: '#E6EBF5',
+        borderTopWidth: 1
     }
 });
 

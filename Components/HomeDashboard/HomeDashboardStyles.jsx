@@ -3,11 +3,14 @@ import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+    container: {
+
+    },
     nameBlock: {
       backgroundColor: '#FA8A34',
       display: 'flex',
       width: '100%',
-      height: '25%',
+      height: 300,
       borderBottomLeftRadius: 30,
       borderBottomRightRadius: 30,
       borderColor: '#FCAD71',
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     },
     testTask: {
         backgroundColor: '#FFFFFF',
-        width: '90%',
+        width: '100%',
         borderRadius: 15,
         display: 'flex',
         flexDirection: 'row',
@@ -57,15 +60,14 @@ const styles = StyleSheet.create({
         width: '50%'
     },
     beforeContainer: {
-        width: '100%',
         marginTop: 20,
     },
     bank: {
         backgroundColor: '#636363',
         borderRadius: 15,
         padding: 15,
-        width: '80%',
-        marginLeft: '5%',
+        width: 250,
+        marginLeft: 5,
     },
     bankTop: {
         display: 'flex',
@@ -82,14 +84,12 @@ const styles = StyleSheet.create({
     wallet: {
         backgroundColor: '#EE6363',
         borderRadius: 15,
-        padding: '5%',
-        width: '80%',
-        marginLeft: '5%',
+        padding: 15,
+        width: 250,
+        marginLeft: 5,
     },
     posts: {
-        width: '90%',
         alignSelf: 'center',
-        marginTop: 20,
     },
 
 });

@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, Image, ScrollView, FlatList, TouchableOpacity} from "react-native";
+import {View, Text, FlatList, TouchableOpacity} from "react-native";
 import {useUser} from "../UserName/UserName";
 import styles from "./HomeDashboardStyles";
-import {ArrowGreenSvg} from "../../Icons/ArrowGreenSvg";
-import {LinkWhiteSvg} from "../../Icons/LinkWhiteSvg";
-import {ArrowLeftSvg} from "../../Icons/ArrowLeftSvg";
-import {LinkGreenSvg} from "../../Icons/LinkGreenSvg";
 import axios from "axios";
 import {useNavigation} from "@react-navigation/native";
+import ListHeaderComponent from "./ListHeaderComponent";
+import {NavBar} from "../NavBar/NavBar";
 
 
 
@@ -39,8 +37,6 @@ export const HomeDashboard = () => {
     }, []);
 
 
-
-
     const renderItem = ({ item }) => (
         <TouchableOpacity
             style={{ padding: 10, backgroundColor: '#FFFFFF', marginVertical: 5, width: '100%', borderRadius: 15, alignSelf: 'center'}}
@@ -52,89 +48,27 @@ export const HomeDashboard = () => {
     );
 
     return (
-        <View style={{backgroundColor: '#F2F3F5', alignItems: 'center'}}>
-            <View style={styles.nameBlock}>
-                <Text style={styles.styledText}>Your name</Text>
-                <View style={styles.nameContainer}>
-                    <Text style={styles.name}>{user.firstName}</Text>
-                    <Text style={styles.name}> {user.lastName}</Text>
-                </View>
-            </View>
-            <View style={styles.testTask}>
-                <View style={styles.leftSide}>
-                    <View>
-                        <Text style={{fontSize: 15, fontWeight: '500'}}>Test task</Text>
-                        <Text style={{fontSize: 13, fontWeight: '400', color: '#858C94'}}>Lorem ipsum</Text>
-                    </View>
-                    <View style={styles.goToCall}>
-                        <Text style={{fontSize: 15, fontWeight: '500', color: '#009E81'}}>Go to call</Text>
-                        <View style={styles.image}>
-                            <ArrowGreenSvg/>
-                        </View>
+        <>
+            <View style={{backgroundColor: '#F2F3F5', alignItems: 'center'}}>
+                <View style={styles.nameBlock}>
+                    <Text style={styles.styledText}>Your name</Text>
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.name}>{user.firstName}</Text>
+                        <Text style={styles.name}> {user.lastName}</Text>
                     </View>
                 </View>
-                <View>
-                    <Image source={require('../../Icons/TestTask.png')}/>
-                </View>
-            </View>
-            <View style={styles.beforeContainer}>
-                <Text style={{fontSize: 15, fontWeight: '400', color: '#606773', marginLeft: '5%',}}>Before you Start</Text>
-                <ScrollView
-                    scrollEventThrottle={16}
-                    horizontal
+                <FlatList
+                    ListHeaderComponent={ListHeaderComponent}
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id.toString()}
+                    vertical
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
-                    style={{marginTop: 10}}
-                >
-                    <View style={styles.bank}>
-                        <View style={styles.bankTop}>
-                            <View style={{marginRight: 15}}>
-                                <LinkWhiteSvg />
-                            </View>
-                            <View>
-                                <Text style={{fontSize: 15, fontWeight: '500', color: '#FFFFFF'}}>Link your Bank{'\n'}Account</Text>
-                            </View>
-                        </View>
-                        <View style={styles.bankBot}>
-                            <View>
-                                <Text style={{fontSize: 15, fontWeight: '500', color: '#FFFFFF'}}>2 steps</Text>
-                            </View>
-                            <View>
-                                <ArrowLeftSvg />
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.wallet}>
-                        <View style={styles.bankTop}>
-                            <View style={{marginRight: 15}}>
-                                <LinkGreenSvg />
-                            </View>
-                            <View>
-                                <Text style={{fontSize: 15, fontWeight: '500', color: '#06070A'}}>Link your Wallet{'\n'}Account</Text>
-                            </View>
-                        </View>
-                        <View style={styles.bankBot}>
-                            <View>
-                                <Text style={{fontSize: 15, fontWeight: '500', color: '#158FAA'}}>3 steps</Text>
-                            </View>
-                            <View>
-                                <ArrowLeftSvg />
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-                <View style={styles.posts}>
-                    <Text style={{fontSize: 15, fontWeight: '400', color: '#606773'}}>Posts</Text>
-                    <FlatList
-                        data={data}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id.toString()}
-                        vertical
-                        showsHorizontalScrollIndicator={false}
-                        style={{ marginTop: 5, display: 'flex' }}
-                    />
-                </View>
+                    style={{height: 470, paddingHorizontal: 16}}
+                />
+                <NavBar />
             </View>
-        </View>
+        </>
     );
 }

@@ -4,6 +4,8 @@ import styles from "./AboutPostStyles";
 import {ArrowSvg} from "../../Icons/ArrowSvg";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import axios from "axios";
+import ListHeaderComponent from "../AboutPost/ListHeaderComponent";
+import {ContinueButton} from "../ContinueButton/ContinueButton";
 
 
 export const AboutPost = () => {
@@ -44,7 +46,7 @@ export const AboutPost = () => {
     );
 
     return(
-        <View>
+        /*<View>
             <View style={styles.header}>
                 <TouchableOpacity
                     style={{marginTop: '10%'}}
@@ -74,6 +76,35 @@ export const AboutPost = () => {
                     style={{ marginTop: 5, display: 'flex' }}
                 />
             </View>
-        </View>
+        </View>*/
+        <>
+            <View style={{backgroundColor: '#F2F3F5', alignItems: 'center'}}>
+                <View style={styles.header}>
+                    <TouchableOpacity
+                        style={{marginTop: '10%'}}
+                        onPress={() => {navigation.navigate('HomeDashboard')}}
+                    >
+                        <ArrowSvg />
+                    </TouchableOpacity>
+                    <View style={styles.headerBot}>
+                        <Text style={{fontSize: 28, fontWeight: '700', marginBottom: '15%'}}>{title}</Text>
+                        <Image style={{}} source={require('../../Icons/recipe.png')}/>
+                    </View>
+                </View>
+                <FlatList
+                    ListHeaderComponent={ListHeaderComponent}
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id.toString()}
+                    vertical
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    style={{height: 250, paddingHorizontal: 16}}
+                />
+                <View style={styles.backButton}>
+                    <ContinueButton style={{marginBottom: 0, height: 50}} bgColor={'#FA8A34'} name={'Back'} onPress={() => {navigation.navigate('HomeDashboard')}}/>
+                </View>
+            </View>
+        </>
     )
 }

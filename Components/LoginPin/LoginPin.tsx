@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from "../PinCode/PinCodeStyles";
 import {Text, TouchableOpacity, View} from "react-native";
 import {PhoneSvg} from "../../Icons/PhoneSvg";
@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useNavigation} from "@react-navigation/native";
 
 import { StackNavigationProp } from '@react-navigation/stack';
+import {FaceIDAuthentication} from "../FaceId/FaceId";
+import {useTranslation} from "react-i18next";
 
 type RootStackParamList = {
     HomeDashboard: undefined; // Якщо компонент не приймає параметри
@@ -18,11 +20,11 @@ type RootStackParamList = {
 type NavigationProp = StackNavigationProp<RootStackParamList, 'HomeDashboard'>;
 
 
-
-
 export const LoginPin = () => {
+    const { t } = useTranslation();
     const [code, setCode] = useState([]);
     const navigation = useNavigation<NavigationProp>();
+
 
     const addDigit = (digit: number) => {
         if (code.length < 5) {
@@ -37,9 +39,7 @@ export const LoginPin = () => {
     const getPinData = async () => {
         try {
             const pin = await AsyncStorage.getItem('userPin');
-            console.log(pin.split(',').map(Number));
-            console.log(code);
-            return pin.split(',').map(Number)   // Split string into array of digits if not null
+            return pin.split(',').map(Number)
         } catch (error) {
             console.error('Error retrieving Pin data:', error);
             return null;
@@ -66,11 +66,12 @@ export const LoginPin = () => {
 
     return(
         <>
+            <FaceIDAuthentication />
             <View style={styles.pinCodeContainer}>
                 <>
                     <View style={styles.pinCodeContainerTop}>
                         <PhoneSvg />
-                        <Text  style={{fontSize: 15, marginTop: 25}}>Enter 5 digits code to login:</Text>
+                        <Text  style={{fontSize: 15, marginTop: 25}}>{t('pinCode.enter 5 digits:')}</Text>
                         <View style={styles.pinCodeDots}>
                             <View style={[styles.pinCodeDot, code.length >= 1 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>
                             <View style={[styles.pinCodeDot, code.length >= 2 ? {backgroundColor: '#FA8A34'} : {backgroundColor: '#BCBFC6'}]}/>

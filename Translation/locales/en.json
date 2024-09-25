@@ -1,0 +1,52 @@
+{
+  "login": "Login",
+  "personal_account": "Personal Account",
+  "name": "Name",
+  "email": "E-mail",
+  "password": "Password",
+  "continue": "Continue",
+  "create_account": "Create Account",
+  "crowd_real_estate": "Crowd real estate",
+  "etfs": "ETFs",
+  "crowd_lending": "Crowd lending",
+  "commodities": "Commodities",
+  "crypto": "Crypto",
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up",
+  "pinCode": {
+    "create pin": "Create a Pin code",
+    "repeat pin": "Repeat a Pin code",
+    "enter 5 digits": "Enter 5 digits code:",
+    "continue": "Continue"
+  },
+  "homeDashboard": {
+    "your name": "Your name",
+    "test task": "Test task",
+    "lorem ipsum": "Lorem ipsum",
+    "go to call": "Go to call",
+    "before you start": "Before you Start",
+    "link your bank account": "Link your Bank\nAccount",
+    "2 steps": "2 steps",
+    "link your wallet account": "Link your Wallet Account",
+    "3 steps": "3 steps",
+    "posts": "Posts"
+  },
+  "profile": {
+    "settings": "Settings",
+    "basic": "Basic",
+    "language": "Language",
+    "other": "Other",
+    "log out": "Log Out"
+  },
+  "language": {
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "search": "Search",
+    "profile": "Profile"
+  }
+}

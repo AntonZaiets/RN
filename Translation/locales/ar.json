@@ -1,0 +1,52 @@
+{
+  "login": "تسجيل الدخول",
+  "personal_account": "الحساب الشخصي",
+  "name": "الاسم",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "continue": "تابع",
+  "create_account": "إنشاء حساب",
+  "crowd_real_estate": "عقارات الحشود",
+  "etfs": "صناديق المؤشرات المتداولة",
+  "crowd_lending": "الإقراض الجماعي",
+  "commodities": "السلع الأساسية",
+  "crypto": "التشفير",
+  "sign_in": "تسجيل الدخول",
+  "sign_up": "التسجيل",
+  "pinCode": {
+    "create pin": "إنشاء رمز سري",
+    "repeat pin": "كرر الرمز السري",
+    "enter 5 digits": "أدخل الرمز المكون من 5 أرقام::",
+    "continue": "تابع"
+  },
+  "homeDashboard": {
+    "your name": "اسمك",
+    "test task": "مهمة الاختبار",
+    "lorem ipsum": "لوريم",
+    "go to call": "انتقل إلى الاتصال",
+    "before you start": "قبل أن تبدأ",
+    "link your bank account": "ربط\nحسابك المصرفي",
+    "2 steps": "2 خطوات",
+    "link your wallet account": "ربط\nحساب محفظتك",
+    "3 steps": "3 خطوات",
+    "posts": "المنشورات"
+  },
+  "profile": {
+    "settings": "الإعدادات",
+    "basic": "الأساسيات",
+    "language": "اللغة",
+    "other": "أخرى",
+    "log out": "تسجيل الخروج"
+  },
+  "language": {
+    "language": "اللغة",
+    "english": "اللغة الإنجليزية",
+    "arabic": "اللغة العربية"
+  },
+  "nav": {
+    "home": "الصفحة الرئيسية",
+    "portfolio": "المحفظة",
+    "search": "بحث",
+    "profile": "الملف الشخصي"
+  }
+}

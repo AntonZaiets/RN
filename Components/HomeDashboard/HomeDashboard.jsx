@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, FlatList, TouchableOpacity} from "react-native";
-import {useUser} from "../UserName/UserName";
 import styles from "./HomeDashboardStyles";
 import axios from "axios";
 import {useNavigation} from "@react-navigation/native";
 import ListHeaderComponent from "./ListHeaderComponent";
 import {NavBar} from "../NavBar/NavBar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useTranslation} from "react-i18next";
 
 
 
 export const HomeDashboard = () => {
-    const { user } = useUser(); // Отримай дані користувача
+    const { t } = useTranslation();
     const [data, setData] = useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const navigation = useNavigation(); // Навігація для переходу між екранами
 
     const fetchPosts = async () => {
@@ -28,6 +31,7 @@ export const HomeDashboard = () => {
     };
 
     useEffect(() => {
+        getUserData()
         const loadData = async () => {
             const posts = await fetchPosts();
             setData(posts);
@@ -35,6 +39,18 @@ export const HomeDashboard = () => {
 
         loadData();
     }, []);
+
+
+    const getUserData = async () => {
+        try {
+            const storedFirstName = await AsyncStorage.getItem('userFirstName');
+            const storedLastName = await AsyncStorage.getItem('userLastName');
+            setFirstName(storedFirstName || '');
+            setLastName(storedLastName || '');
+        } catch (error) {
+            console.error('Error retrieving login data:', error);
+        }
+    };
 
 
     const renderItem = ({ item }) => (
@@ -51,10 +67,9 @@ export const HomeDashboard = () => {
         <>
             <View style={{backgroundColor: '#F2F3F5', alignItems: 'center'}}>
                 <View style={styles.nameBlock}>
-                    <Text style={styles.styledText}>Your name</Text>
+                    <Text style={styles.styledText}>{t('homeDashboard.your name')}</Text>
                     <View style={styles.nameContainer}>
-                        <Text style={styles.name}>{user.firstName}</Text>
-                        <Text style={styles.name}> {user.lastName}</Text>
+                        <Text style={styles.name}>{firstName} {lastName}</Text>
                     </View>
                 </View>
                 <FlatList

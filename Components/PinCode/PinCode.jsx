@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { FaceIDAuthentication } from "../FaceId/FaceId";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoginPin } from "../LoginPin/LoginPin";
+import {useTranslation} from "react-i18next";
 
 export const PinCode = () => {
     const [code, setCode] = useState([]);
@@ -69,7 +70,7 @@ export const PinCode = () => {
         } else {
             setPressedContinue(true);
             if (previousCode.length === code.length && previousCode.every((digit, index) => digit === code[index])) {
-                savePinData(previousCode); // Зберігаємо пін-код
+                savePinData(previousCode.toString()); // Зберігаємо пін-код
                 setErrorMessage('');
                 setIsFaceIDRequired(true);
                 navigation.navigate('HomeDashboard');

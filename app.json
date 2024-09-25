@@ -12,7 +12,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSFaceIDUsageDescription": "This app uses Face ID to authenticate the user."
+        "NSFaceIDUsageDescription": "This app uses Face ID to verify the user`s identity and protect sensitive data."
       }
     },
     "android": {
@@ -23,7 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
-

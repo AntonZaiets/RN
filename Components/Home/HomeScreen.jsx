@@ -23,7 +23,6 @@ import {ErrorLabelSvg} from "../../Icons/ErrorLabelSvg";
 import {ModalUserSvg} from "../../Icons/ModalUserSvg";
 import {useNavigation} from "@react-navigation/native";
 import {ContinueButton} from "../ContinueButton/ContinueButton";
-import {useUser} from "../UserName/UserName";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = ({ onHomeLoaded }) => {
@@ -33,50 +32,18 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState(null);
-    const [borderColor, setBorderColor] = useState('#ddd')
+    const [borderColor, setBorderColor] = useState('#ddd');
     const [inputError, setInputError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [openPin, setOpenPin] = useState(false);
     const navigation = useNavigation();
-    const { setUser } = useUser(); // Отримай функцію для оновлення користувача
 
+// Toggle password visibility
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    /*const checkLoginStatus = async () => {
-        try {
-            const token = await AsyncStorage.getItem('userToken');
-            if (token !== null) {
-                // Якщо токен існує, перенаправляємо на компонент PinCode
-                navigation.navigate('PinCode');
-            }
-        } catch (error) {
-            console.error('Error retrieving token:', error);
-        }
-    };
-
-    useEffect(() => {
-        checkLoginStatus(); // викликаємо функцію при завантаженні компонента
-    }, []);*/
-
-    /*const saveLoginData = async (token) => {
-        try {
-            await AsyncStorage.setItem('userToken', token);
-        } catch (error) {
-            console.error('Error saving login data:', error);
-        }
-    };*/
-
-    /*const getLoginData = async () => {
-        try {
-            const token = await AsyncStorage.getItem('userToken');
-            return token !== null ? token : null;
-        } catch (error) {
-            console.error('Error retrieving login data:', error);
-            return null;
-        }
-    };*/
+// Перевірка статусу логіну
     const checkLoginStatus = async () => {
         try {
             const token = await AsyncStorage.getItem('userToken');
@@ -93,30 +60,101 @@ export const HomeScreen = ({ onHomeLoaded }) => {
         checkLoginStatus();
     }, []);
 
+// Збереження токена
     const saveLoginData = async (token) => {
         try {
             await AsyncStorage.setItem('userToken', token);
             console.log('Token saved successfully');
+            setOpenSignInModal(false);
+            navigation.navigate('PinCode')
         } catch (error) {
             console.error('Error saving login data:', error);
         }
     };
 
+// Збереження імені користувача
+    const saveUserData = async (firstName, lastName) => {
+        try {
+            await AsyncStorage.setItem('userFirstName', firstName);
+            await AsyncStorage.setItem('userLastName', lastName);
+            console.log('User name saved successfully');
+        } catch (error) {
+            console.error('Error saving login data:', error);
+        }
+    };
+
+// Оновлення токена за допомогою refreshToken
+    const refreshAuthToken = async () => {
+        try {
+            const refreshToken = await AsyncStorage.getItem('refreshToken');
+            console.log('Refresh Token:', refreshToken); // Додати лог
+            if (!refreshToken) {
+                throw new Error('No refresh token available');
+            }
+
+            const response = await fetch('https://dummyjson.com/auth/refresh', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    refreshToken: refreshToken,
+                    expiresInMins: 30,
+                }),
+                credentials: 'include',
+            });
+
+            const data = await response.json();
+            console.log('Refresh token response:', data); // Додати лог
+            if (data.token) {
+                await saveLoginData(data.token);
+                setToken(data.token);
+                return data.token;
+            }
+            throw new Error('Failed to refresh token');
+        } catch (error) {
+            console.error('Error refreshing token:', error);
+            return null;
+        }
+    };
+
+
+// Отримання даних користувача
     const handleLogin = async () => {
         try {
+            console.log('Attempting to log in...');
             const response = await axios.post('https://dummyjson.com/auth/login', {
                 username: email,
                 password: password,
             });
 
-            if (response.data && response.data.token) {
-                await saveLoginData(response.data.token);  // зберігаємо токен
-                setToken(response.data.token);
+            console.log('Login response:', response.data);
+
+            // Перевірка наявності токенів
+            if (response.data && (response.data.token || response.data.accessToken)) {
+                const tokenToUse = response.data.token || response.data.accessToken;
+                await saveLoginData(tokenToUse);
+                if (response.data.refreshToken) {
+                    await AsyncStorage.setItem('refreshToken', response.data.refreshToken);
+                }
+
+                // Отримуємо дані користувача
+                const userData = await axios.get('https://dummyjson.com/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${tokenToUse}`,
+                    },
+                    withCredentials: true,
+                });
+
+                await saveUserData(userData.data.firstName, userData.data.lastName);
+                console.log('User data:', userData.data);
+
+                setToken(tokenToUse);
                 setOpenSignInModal(false);
                 setInputError(false);
                 setErrorMessage('');
                 setOpenPin(true);
                 navigation.navigate('PinCode');
+            } else {
+                console.error('No token received in response');
             }
         } catch (error) {
             Alert.alert('Error', 'Login failed');
@@ -128,12 +166,45 @@ export const HomeScreen = ({ onHomeLoaded }) => {
         }
     };
 
-    useEffect(() => {
-        const loadComponent = async () => {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            onHomeLoaded();
-        };
-    }, [onHomeLoaded]);
+
+
+    const fetchUserData = async () => {
+        console.log('Fetching user data...');
+        let currentToken = token;
+
+        if (!currentToken) {
+            console.log('No current token, refreshing...');
+            currentToken = await refreshAuthToken();
+        }
+
+        if (currentToken) {
+            try {
+                const userDataResponse = await axios.get('https://dummyjson.com/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                    },
+                    withCredentials: true,
+                });
+
+                console.log('User data response:', userDataResponse.data);
+                setUserData(userDataResponse.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error.response ? error.response.data : error.message);
+            }
+        } else {
+            console.error('Unable to fetch user data, no valid token');
+        }
+    };
+
+
+
+    // Видаляємо або виправляємо onHomeLoaded
+        useEffect(() => {
+            const loadComponent = async () => {
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+            };
+            loadComponent();
+        }, []);
 
     function renderSignUpModal() {
         return (
@@ -178,9 +249,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.modalContinueButton}>
-                            <Text style={styles.modalContinueButtonText}>Continue</Text>
-                        </TouchableOpacity>
+                        <ContinueButton name={'Continue'} bgColor={'#FA8A34'}/>
                     </View>
                 </View>
             </Modal>
@@ -240,7 +309,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ContinueButton onPress = {handleLogin} bgColor={'#FA8A34'}/>
+                        <ContinueButton onPress = {handleLogin} bgColor={'#FA8A34'} name={'Continue'}/>
                         <TouchableOpacity style={styles.modalCreateAccountButton} onPress={() => { setOpenSignUpModal(true); setOpenSignInModal(false); }}>
                             <Text style={styles.modalCreateAccountButtonText}>Create Account</Text>
                             {renderSignUpModal()}

@@ -48,5 +48,11 @@
     "portfolio": "Portfolio",
     "search": "Search",
     "profile": "Profile"
+  },
+  "search": {
+    "search": "Search",
+    "search input": "Search Products...",
+    "id": "ID:",
+    "name": "Name:"
   }
 }

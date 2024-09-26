@@ -8,6 +8,7 @@ import {AboutPost} from "./Components/AboutPost/AboutPost";
 import {LoginPin} from "./Components/LoginPin/LoginPin";
 import {Profile} from "./Components/Profile/Profile";
 import {Language} from "./Components/Language/Language";
+import {Search} from "./Components/Search/Search";
 
 const App = () => {
     /*const [homeLoaded, setHomeLoaded] = useState(false);*/
@@ -27,6 +28,7 @@ const App = () => {
                 <Stack.Screen options={{ headerShown: false }} name="AboutPost" component={AboutPost} />
                 <Stack.Screen options={{ headerShown: false }} name="Profile" component={Profile} />
                 <Stack.Screen options={{ headerShown: false }} name="Language" component={Language} />
+                <Stack.Screen options={{ headerShown: false }} name="Search" component={Search} />
             </Stack.Navigator>
         </NavigationContainer>
     );

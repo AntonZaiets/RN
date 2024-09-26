@@ -15,7 +15,7 @@ export const NavBar = () => {
     const navigation = useNavigation();
     const colorHome = route.name === 'HomeDashboard' ? '#FA8A34' : '#858C94'
     //const colorPortfolio = route.name === 'HomeDashboard' ? '#FA8A34' : '#858C94'
-    //const colorSearch = route.name === 'HomeDashboard' ? '#FA8A34' : '#858C94'
+    const colorSearch = route.name === 'Search' ? '#FA8A34' : '#858C94'
     const colorProfile = route.name === 'Profile' ? '#FA8A34' : '#858C94'
     const fillRuleHome = route.name === 'HomeDashboard' ? 'nonzero' : 'evenodd'
     const fillRuleProfile = route.name === 'Profile' ? '#FA8A34' : 'none'
@@ -31,9 +31,9 @@ export const NavBar = () => {
                         <PortfolioSvg />
                         <Text>{t('nav.portfolio')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.tabs}>
-                        <SearchSvg />
-                        <Text>{t('nav.search')}</Text>
+                    <TouchableOpacity style={styles.tabs} onPress={() => {navigation.navigate('Search' as never)}}>
+                        <SearchSvg fill={colorSearch}/>
+                        <Text style={route.name === 'Search' ? {color: '#FA8A34'} : {color: '#858C94'}}>{t('nav.search')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.tabs} onPress = {() => {navigation.navigate('Profile' as never)}}>
                         <ProfileSvg fill={colorProfile} fillRule={fillRuleProfile}/>

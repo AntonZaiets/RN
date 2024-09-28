@@ -7,7 +7,7 @@ import { SearchSvg } from "../../Icons/SearchSvg";
 import axios from "axios";
 
 export const Search = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [data, setData] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -16,7 +16,7 @@ export const Search = () => {
     const fetchPosts = async () => {
         try {
             const results = [];
-            for (let i = 1; i <= 100; i++) {
+            for (let i = 1; i <= 10; i++) {
                 const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${i}`);
                 results.push(response.data);
             }
@@ -53,18 +53,29 @@ export const Search = () => {
     };
 
 
-
-    const renderItem = ({ item }) => (
+    const renderItem = ({item}) => (
         <TouchableOpacity
-            style={{ padding: 10, backgroundColor: '#FFFFFF', marginVertical: 5, width: '100%', borderRadius: 15, alignSelf: 'center' }}
+            style={{
+                padding: 10,
+                backgroundColor: '#FFFFFF',
+                marginVertical: 5,
+                width: '100%',
+                borderRadius: 15,
+                alignSelf: 'center'
+            }}
         >
-            <Text style={{ fontSize: 18, fontWeight: '500' }}>{t('search.id')} {item.id}</Text>
-            <Text style={{ fontSize: 16, fontWeight: '400', color: '#414141', marginTop: 10 }}>{t('search.name')} {item.title}</Text>
+            <Text style={{fontSize: 18, fontWeight: '500'}}>{t('search.id')} {item.id}</Text>
+            <Text style={{
+                fontSize: 16,
+                fontWeight: '400',
+                color: '#414141',
+                marginTop: 10
+            }}>{t('search.name')} {item.title}</Text>
         </TouchableOpacity>
     );
 
     return (
-        <SafeAreaView style={{ backgroundColor: '#F2F3F5' }}>
+        <SafeAreaView style={{backgroundColor: '#F2F3F5', flex: 1}}>
             <View style={styles.container}>
                 <View style={styles.top}>
                     <Text style={styles.searchHead}>{t('search.search')}</Text>
@@ -76,20 +87,21 @@ export const Search = () => {
                         onChangeText={handleSearch}
                     />
                     <View style={styles.searchSvgBlock}>
-                        <SearchSvg fill={'#626975'} />
+                        <SearchSvg fill={'#626975'}/>
                     </View>
                 </View>
                 <FlatList
-                    vertical
                     data={filteredData}
                     renderItem={renderItem}
                     keyExtractor={item => item.id.toString()}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
-                    style={{ height: 470, paddingHorizontal: 16 }}
+                    style={{flex: 1, paddingHorizontal: 16}}
                 />
-                <NavBar />
-                <StatusBar barStyle={'dark-content'} />
+                <StatusBar barStyle={'dark-content'}/>
+                <View style={styles.navBarContainer}>
+                    <NavBar/>
+                </View>
             </View>
         </SafeAreaView>
     );

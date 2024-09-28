@@ -11,12 +11,10 @@ import {Language} from "./Components/Language/Language";
 import {Search} from "./Components/Search/Search";
 
 const App = () => {
-    /*const [homeLoaded, setHomeLoaded] = useState(false);*/
 
-    /*const handleHomeLoaded = () => {
-        setHomeLoaded(true);
-    };*/
     const Stack = createStackNavigator();
+
+
 
     return (
         <NavigationContainer>

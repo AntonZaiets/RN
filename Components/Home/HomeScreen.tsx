@@ -38,18 +38,17 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const [openPin, setOpenPin] = useState(false);
     const navigation = useNavigation();
 
-// Toggle password visibility
+
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-// Перевірка статусу логіну
     const checkLoginStatus = async () => {
         try {
             const token = await AsyncStorage.getItem('userToken');
             if (token !== null) {
                 setToken(token);
-                navigation.navigate('PinCode');
+                navigation.navigate('PinCode' as never);
             }
         } catch (error) {
             console.error('Error retrieving token:', error);
@@ -61,19 +60,19 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     }, []);
 
 // Збереження токена
-    const saveLoginData = async (token) => {
+    const saveLoginData = async (token : any) => {
         try {
             await AsyncStorage.setItem('userToken', token);
             console.log('Token saved successfully');
             setOpenSignInModal(false);
-            navigation.navigate('PinCode')
+            navigation.navigate('PinCode' as never)
         } catch (error) {
             console.error('Error saving login data:', error);
         }
     };
 
 // Збереження імені користувача
-    const saveUserData = async (firstName, lastName) => {
+    const saveUserData = async (firstName : any, lastName : any) => {
         try {
             await AsyncStorage.setItem('userFirstName', firstName);
             await AsyncStorage.setItem('userLastName', lastName);
@@ -152,7 +151,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 setInputError(false);
                 setErrorMessage('');
                 setOpenPin(true);
-                navigation.navigate('PinCode');
+                navigation.navigate('PinCode' as never);
             } else {
                 console.error('No token received in response');
             }
@@ -187,7 +186,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                 });
 
                 console.log('User data response:', userDataResponse.data);
-                setUserData(userDataResponse.data);
+                saveUserData(userDataResponse.data.firstName, userDataResponse.data.lastName);
             } catch (error) {
                 console.error('Error fetching user data:', error.response ? error.response.data : error.message);
             }
@@ -218,9 +217,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     </TouchableOpacity>
                     <View>
                         <View style={styles.modalHeader}>
-                            <View style={styles.modalUserSvg}>
-                                <ModalUserSvg/>
-                            </View>
+                            <ModalUserSvg/>
                             <View style={styles.modalHeaderText}>
                                 <Text style={styles.modalTitle}>Login</Text>
                                 <Text style={styles.modalSubtitle}>Personal Account</Text>
@@ -249,7 +246,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ContinueButton name={'Continue'} bgColor={'#FA8A34'}/>
+                        <ContinueButton disables={false} name={'Continue'} bgColor={'#FA8A34'}  onPress={() => {}}/>
                     </View>
                 </View>
             </Modal>
@@ -268,9 +265,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     </TouchableOpacity>
                     <View>
                         <View style={styles.modalHeader}>
-                            <View style={styles.modalUserSvg}>
-                                <ModalUserSvg/>
-                            </View>
+                            <ModalUserSvg/>
                             <View style={styles.modalHeaderText}>
                                 <Text style={styles.modalTitle}>Login</Text>
                                 <Text style={styles.modalSubtitle}>Personal Account</Text>
@@ -309,7 +304,7 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ContinueButton onPress = {handleLogin} bgColor={'#FA8A34'} name={'Continue'}/>
+                        <ContinueButton disables={false} onPress = {handleLogin} bgColor={'#FA8A34'} name={'Continue'}/>
                         <TouchableOpacity style={styles.modalCreateAccountButton} onPress={() => { setOpenSignUpModal(true); setOpenSignInModal(false); }}>
                             <Text style={styles.modalCreateAccountButtonText}>Create Account</Text>
                             {renderSignUpModal()}
@@ -336,13 +331,13 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <View style={styles.leftIcon}>
-                                <CranSvg width={50} height={50} />
+                                <CranSvg />
                             </View>
                             <View style={styles.centerIcon}>
-                                <FlatSvg width={60} height={60} />
+                                <FlatSvg />
                             </View>
                             <View style={styles.rightIcon}>
-                                <HouseSvg width={50} height={50} />
+                                <HouseSvg />
                             </View>
                         </View>
                         <Text style={styles.imageText}>Crowd real estate</Text>
@@ -350,13 +345,13 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <View style={styles.leftIcon}>
-                                <MountainSvg width={50} height={50} />
+                                <MountainSvg />
                             </View>
                             <View style={styles.centerIcon}>
-                                <RedHuiniaSvg width={60} height={60} />
+                                <RedHuiniaSvg />
                             </View>
                             <View style={styles.rightIcon}>
-                                <BlackHuiniaSvg width={50} height={50} />
+                                <BlackHuiniaSvg />
                             </View>
                         </View>
                         <Text style={styles.imageText}>ETFs</Text>
@@ -366,13 +361,13 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <View style={styles.leftIcon}>
-                                <UserSvg width={50} height={50} />
+                                <UserSvg />
                             </View>
                             <View style={styles.centerIcon}>
-                                <HandSvg width={60} height={60} />
+                                <HandSvg />
                             </View>
                             <View style={styles.rightIcon}>
-                                <UserSvg width={50} height={50} />
+                                <UserSvg />
                             </View>
                         </View>
                         <Text style={styles.imageText}>Crowd lending</Text>
@@ -380,13 +375,13 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <View style={styles.leftIcon}>
-                                <OilSvg width={50} height={50} />
+                                <OilSvg />
                             </View>
                             <View style={styles.centerIcon}>
-                                <GoldSvg width={60} height={60} />
+                                <GoldSvg />
                             </View>
                             <View style={styles.rightIcon}>
-                                <ElectricSvg width={50} height={50} />
+                                <ElectricSvg />
                             </View>
                         </View>
                         <Text style={styles.imageText}>Commodities</Text>
@@ -394,13 +389,13 @@ export const HomeScreen = ({ onHomeLoaded }) => {
                     <View style={styles.imageBg}>
                         <View style={styles.svgContainer}>
                             <View style={styles.leftIcon}>
-                                <EthereumSvg width={50} height={50} />
+                                <EthereumSvg />
                             </View>
                             <View style={styles.centerIcon}>
-                                <BitcoinSvg width={60} height={60} />
+                                <BitcoinSvg />
                             </View>
                             <View style={styles.rightIcon}>
-                                <TetherSvg width={50} height={50} />
+                                <TetherSvg />
                             </View>
                         </View>
                         <Text style={styles.imageText}>Crypto</Text>

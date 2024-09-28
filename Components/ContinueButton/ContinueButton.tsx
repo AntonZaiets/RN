@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import styles from "../ContinueButton/ContinueButtonStyles";
+import styles from "./ContinueButtonStyles";
 
 export const ContinueButton = ({ onPress, bgColor, disables, name }) => {
     return (

@@ -34,7 +34,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 73,
         left: 25,
-    }
+    },
+    navBarContainer: {
+        position: 'absolute',
+        bottom: -50,
+        left: 0,
+        right: 0,
+    },
 });
 
 export default styles;

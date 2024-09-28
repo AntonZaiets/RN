@@ -3,7 +3,7 @@ import { Svg, Path, Rect, G } from 'react-native-svg';
 
 export const CranSvg = () => {
     return (
-        <Svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <Svg width="44" height="44" viewBox="0 0 44 44" fill="none" >
             <G opacity="0.64">
                 <Rect x="0.000244141" width="43.9999" height="43.9999" rx="22" fill="#77CDD9"/>
                 <Path

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 700,
         display: 'flex',
-        alignText: 'center',
+        //alignText: 'center',
         justifyContent: 'center',
     },
     button: {
@@ -66,8 +66,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     buttonPressed: {
-        //backgroundColor: 'red',
-        borderRadius: '50%',
+        borderRadius: 50,
     },
     continueButton: {
       backgroundColor: 'red',

@@ -185,19 +185,6 @@ const styles = StyleSheet.create({
         right: 20,
         top: 35,
     },
-    /*modalContinueButton: {
-        backgroundColor: '#FA8A34',
-        borderRadius: 5,
-        paddingVertical: 15,
-        alignItems: 'center',
-        marginTop: 20,
-        marginHorizontal: 15,
-    },
-    modalContinueButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },*/
     modalCreateAccountButton: {
         marginTop: 15,
         alignItems: 'center',

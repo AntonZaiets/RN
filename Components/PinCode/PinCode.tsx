@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from "react-native";
-import styles from "../PinCode/PinCodeStyles";
+import styles from "./PinCodeStyles";
 import { PhoneSvg } from "../../Icons/PhoneSvg";
 import { DeleteSvg } from "../../Icons/DeleteSvg";
 import { ContinueButton } from "../ContinueButton/ContinueButton";
@@ -73,7 +73,7 @@ export const PinCode = () => {
                 savePinData(previousCode.toString()); // Зберігаємо пін-код
                 setErrorMessage('');
                 setIsFaceIDRequired(true);
-                navigation.navigate('HomeDashboard');
+                navigation.navigate('HomeDashboard' as never);
             } else {
                 setErrorMessage('Wrong Code. Try again!');
                 setCode([]); // Очищуємо код у разі невдачі
@@ -164,7 +164,6 @@ export const PinCode = () => {
                                 </View>
                             </View>
                             <ContinueButton
-                                style={styles.continueButton}
                                 bgColor={code.length === 5 ? '#FA8A34' : '#FEE8D6'}
                                 disables={code.length !== 5}
                                 onPress={clickedContinueButton}

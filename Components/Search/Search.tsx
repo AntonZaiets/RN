@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./SearchStyles";
 import { FlatList, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { NavBar } from "../Navigation/NavBar";
+import { NavBar } from "../Navigation/Navigation";
 import { useTranslation } from "react-i18next";
 import { SearchSvg } from "../../Icons/SearchSvg";
 import {posts} from "../Services/api/post";

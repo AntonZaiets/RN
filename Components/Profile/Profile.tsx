@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styles from './ProfileStyles';
 import {StatusBar, SafeAreaView, Text, View, TouchableOpacity} from 'react-native'
-import {NavBar} from "../NavBar/NavBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {GlobusSvg} from "../../Icons/GlobusSvg";
 import {LogOutSvg} from "../../Icons/LogOutSvg";
@@ -68,7 +67,6 @@ export const Profile = () => {
                             <Text style={styles.title}>{t('profile.log out')}</Text>
                         </TouchableOpacity>
                     </View>
-                    <NavBar />
                     <StatusBar  barStyle={'dark-content'}/>
                 </View>
             </>

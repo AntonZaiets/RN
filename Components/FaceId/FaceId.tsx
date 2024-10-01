@@ -14,6 +14,6 @@ export const FaceIDAuthentication = () => {
         authenticate();
     }, []);
 
-    if(isAuthenticated) navigation.navigate('HomeDashboard' as never)
+    if(isAuthenticated) navigation.navigate('Main' as never)
 
 };

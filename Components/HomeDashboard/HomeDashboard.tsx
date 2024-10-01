@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import styles from "./HomeDashboardStyles";
-import axios from "axios";
-import { useNavigation, NavigationProp } from "@react-navigation/native"; // Import NavigationProp
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import ListHeaderComponent from "./ListHeaderComponent";
-import { NavBar } from "../NavBar/NavBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
+import {posts} from "../Services/api/post";
+
 
 type HomeDashboardProps = {
     title: string;
@@ -28,14 +28,10 @@ export const HomeDashboard = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const fetchPosts = async () => {
+        const response = await posts();
         const results = [];
         for (let i = 1; i <= 3; i++) {
-            try {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${i}`);
-                results.push(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+            results.push(response[i])
         }
         return results;
     };
@@ -86,7 +82,7 @@ export const HomeDashboard = () => {
                 showsVerticalScrollIndicator={false}
                 style={{ height: 470, paddingHorizontal: 16 }}
             />
-            <NavBar />
+            {/*<NavBar />*/}
         </View>
     );
 };

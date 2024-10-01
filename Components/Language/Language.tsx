@@ -4,7 +4,6 @@ import styles from './LanguageStyles';
 import { ArrowSvg } from '../../Icons/ArrowSvg';
 import { GlobusSvg } from '../../Icons/GlobusSvg';
 import { CheckSvg } from '../../Icons/CheckSvg';
-import { NavBar } from '../NavBar/NavBar';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../Translation/i18n';
@@ -61,7 +60,6 @@ export const Language = () => {
                         {language === 'ar' ? <CheckSvg /> : <View style={styles.grayCircle} />}
                     </TouchableOpacity>
                 </View>
-                <NavBar />
                 <StatusBar barStyle={'dark-content'} />
             </View>
         </SafeAreaView>

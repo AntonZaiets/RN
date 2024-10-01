@@ -24,8 +24,10 @@ import {ModalUserSvg} from "../../Icons/ModalUserSvg";
 import {useNavigation} from "@react-navigation/native";
 import {ContinueButton} from "../ContinueButton/ContinueButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ApiLogin, getCurrentUser, refreshSession} from "../Services/api/auth";
 
 export const HomeScreen = ({ onHomeLoaded }) => {
+
     const [openSignUpModal, setOpenSignUpModal] = useState(false);
     const [openSignInModal, setOpenSignInModal] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -37,7 +39,6 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [openPin, setOpenPin] = useState(false);
     const navigation = useNavigation();
-
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -86,28 +87,21 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     const refreshAuthToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            console.log('Refresh Token:', refreshToken); // Додати лог
+            console.log('Refresh Token:', refreshToken);
+
             if (!refreshToken) {
                 throw new Error('No refresh token available');
             }
 
-            const response = await fetch('https://dummyjson.com/auth/refresh', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    refreshToken: refreshToken,
-                    expiresInMins: 30,
-                }),
-                credentials: 'include',
-            });
+            // Викликаємо функцію для оновлення токена
+            const response = await refreshSession(refreshToken);
 
-            const data = await response.json();
-            console.log('Refresh token response:', data); // Додати лог
-            if (data.token) {
-                await saveLoginData(data.token);
-                setToken(data.token);
-                return data.token;
+            if (response.accessToken) {
+                await saveLoginData(response.accessToken);
+                setToken(response.accessToken);
+                return response.accessToken;
             }
+
             throw new Error('Failed to refresh token');
         } catch (error) {
             console.error('Error refreshing token:', error);
@@ -116,35 +110,33 @@ export const HomeScreen = ({ onHomeLoaded }) => {
     };
 
 
+
 // Отримання даних користувача
     const handleLogin = async () => {
         try {
             console.log('Attempting to log in...');
-            const response = await axios.post('https://dummyjson.com/auth/login', {
-                username: email,
-                password: password,
-            });
 
-            console.log('Login response:', response.data);
+            // Виклик ApiLogin для авторизації
+            const response = await ApiLogin(email, password);
 
-            // Перевірка наявності токенів
-            if (response.data && (response.data.token || response.data.accessToken)) {
-                const tokenToUse = response.data.token || response.data.accessToken;
+            // Логуємо відповідь
+            console.log('Login response:', response);
+
+            // Перевіряємо, чи є токен
+            if (response && response.accessToken) {
+                const tokenToUse = response.accessToken;
+
+                // Зберігаємо токен і refreshToken
                 await saveLoginData(tokenToUse);
-                if (response.data.refreshToken) {
-                    await AsyncStorage.setItem('refreshToken', response.data.refreshToken);
+                if (response.refreshToken) {
+                    await AsyncStorage.setItem('refreshToken', response.refreshToken);
                 }
 
-                // Отримуємо дані користувача
-                const userData = await axios.get('https://dummyjson.com/auth/me', {
-                    headers: {
-                        'Authorization': `Bearer ${tokenToUse}`,
-                    },
-                    withCredentials: true,
-                });
+                // Отримання даних користувача
+                const userData = await getCurrentUser(tokenToUse);
+                await saveUserData(response.firstName, response.lastName);
 
-                await saveUserData(userData.data.firstName, userData.data.lastName);
-                console.log('User data:', userData.data);
+                console.log('User data:', userData);
 
                 setToken(tokenToUse);
                 setOpenSignInModal(false);
@@ -167,43 +159,8 @@ export const HomeScreen = ({ onHomeLoaded }) => {
 
 
 
-    const fetchUserData = async () => {
-        console.log('Fetching user data...');
-        let currentToken = token;
-
-        if (!currentToken) {
-            console.log('No current token, refreshing...');
-            currentToken = await refreshAuthToken();
-        }
-
-        if (currentToken) {
-            try {
-                const userDataResponse = await axios.get('https://dummyjson.com/auth/me', {
-                    headers: {
-                        'Authorization': `Bearer ${currentToken}`,
-                    },
-                    withCredentials: true,
-                });
-
-                console.log('User data response:', userDataResponse.data);
-                saveUserData(userDataResponse.data.firstName, userDataResponse.data.lastName);
-            } catch (error) {
-                console.error('Error fetching user data:', error.response ? error.response.data : error.message);
-            }
-        } else {
-            console.error('Unable to fetch user data, no valid token');
-        }
-    };
 
 
-
-    // Видаляємо або виправляємо onHomeLoaded
-        useEffect(() => {
-            const loadComponent = async () => {
-                await new Promise((resolve) => setTimeout(resolve, 2000));
-            };
-            loadComponent();
-        }, []);
 
     function renderSignUpModal() {
         return (

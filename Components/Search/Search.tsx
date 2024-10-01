@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./SearchStyles";
 import { FlatList, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { NavBar } from "../NavBar/NavBar";
+import { NavBar } from "../Navigation/NavBar";
 import { useTranslation } from "react-i18next";
 import { SearchSvg } from "../../Icons/SearchSvg";
-import axios from "axios";
+import {posts} from "../Services/api/post";
 
 export const Search = () => {
     const {t} = useTranslation();
@@ -16,9 +16,9 @@ export const Search = () => {
     const fetchPosts = async () => {
         try {
             const results = [];
-            for (let i = 1; i <= 10; i++) {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${i}`);
-                results.push(response.data);
+            const response = await posts();
+            for (let i = 0; i < 100; i++) {
+                results.push(response[i]);
             }
             return results;
         } catch (error) {
@@ -100,7 +100,7 @@ export const Search = () => {
                 />
                 <StatusBar barStyle={'dark-content'}/>
                 <View style={styles.navBarContainer}>
-                    <NavBar/>
+                    {/*<NavBar/>*/}
                 </View>
             </View>
         </SafeAreaView>

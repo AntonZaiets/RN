@@ -51,7 +51,7 @@ export const LoginPin = () => {
             const storedPin = await getPinData();
 
             if (storedPin && code && storedPin.length === code.length && storedPin.every((digit, index) => digit === code[index])) {
-                 navigation.navigate('HomeDashboard');
+                 navigation.navigate('Main' as never);
             } else {
                 console.log('Incorrect PIN');
             }

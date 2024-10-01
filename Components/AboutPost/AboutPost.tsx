@@ -6,6 +6,7 @@ import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import axios from "axios";
 import ListHeaderComponent from "../AboutPost/ListHeaderComponent";
 import { ContinueButton } from "../ContinueButton/ContinueButton";
+import {comments} from "../Services/api/post";
 
 // Define the parameter types for navigation
 type RootStackParamList = {
@@ -29,13 +30,9 @@ export const AboutPost = () => {
 
     const fetchPosts = async () => {
         const results = [];
+        const response = await comments();
         for (let i = 1; i <= 3; i++) {
-            try {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/comments/${i}`);
-                results.push(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+            results.push(response[i]);
         }
         return results;
     };

@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import * as SplashScreenLib from 'expo-splash-screen';
 import { BitcoinIntroSvg } from "../../Icons/BitcoinIntroSvg";
+import {comments, posts} from "../Services/api/post";
 
-SplashScreenLib.preventAutoHideAsync();
 
-export const SplashScreen = ({ onHomeLoaded }) => {
+export const SplashScreen = ({onLoadingComplete}) => {
+
     useEffect(() => {
-
         const handleHideSplash = async () => {
-            await new Promise(() => {
-                setTimeout(() => {
-                    onHomeLoaded();
-                }, 2000);
-            });
-            await SplashScreenLib.hideAsync();
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            await Promise.all([comments(), posts()]);
+            onLoadingComplete();
         };
-        handleHideSplash();
-    }, [onHomeLoaded]);
+
+        handleHideSplash()
+
+    }, []);
 
     return (
         <View style={styles.container}>
